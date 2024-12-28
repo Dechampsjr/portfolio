@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import Header from "./components/Header";
+import MainContent from "./components/MainContent";
+import Footer from "./components/Footer";
+import "./index.css";
 
-function App() {
+const App = () => {
+  // Estado para o modo escuro (true para escuro, false para claro)
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Estado para o idioma (PT ou EN)
+  const [language, setLanguage] = useState("pt");
+
+  // Função para alternar entre modo escuro e claro
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+  // Função para alternar entre os idiomas (PT ou EN)
+  const toggleLanguage = () => {
+    setLanguage(language === "en" ? "pt" : "en");
+  };
+
+  // Atualizar a classe do body conforme o estado do modo escuro
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, [darkMode]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header
+        toggleDarkMode={toggleDarkMode}
+        darkMode={darkMode}
+        toggleLanguage={toggleLanguage}
+        language={language}
+      />
+      <MainContent language={language} />{" "}
+      {/* Passando o idioma para o MainContent */}
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;
